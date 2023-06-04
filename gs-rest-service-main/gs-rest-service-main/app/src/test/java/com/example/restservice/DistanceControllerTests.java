@@ -29,24 +29,26 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class GreetingControllerTests {
+public class DistanceControllerTests {
 
 	@Autowired
 	private MockMvc mockMvc;
 
 	@Test
-	public void noParamGreetingShouldReturnDefaultMessage() throws Exception {
-
-		this.mockMvc.perform(get("/greeting")).andDo(print()).andExpect(status().isOk())
-				.andExpect(jsonPath("$.content").value("Hello World!"));
+	public void DistanceFFBLS() throws Exception {
+		this.mockMvc.perform(get("/api/v1/distance/FF/BLS"))
+        	.andDo(print())
+			.andExpect(status().isOk())
+			.andExpect(jsonPath("$.from").value("Frankfurt(Main)Hbf"))
+			.andExpect(jsonPath("$.to").value("Berlin Hbf"))
+			.andExpect(jsonPath("$.distance").value(423))
+			.andExpect(jsonPath("$.unit").value("km"));
 	}
 
-	@Test
-	public void paramGreetingShouldReturnTailoredMessage() throws Exception {
-
-		this.mockMvc.perform(get("/greeting").param("name", "Spring Community"))
-				.andDo(print()).andExpect(status().isOk())
-				.andExpect(jsonPath("$.content").value("Hello Spring Community!"));
-	}
-
+	/**
+	.andExpect(jsonPath("$.from").value("Frankfurt(Main)Hbf"))
+			.andExpect(jsonPath("$.to").value("Berlin Hbf"))
+			.andExpect(jsonPath("$.distance").value(423))
+			.andExpect(jsonPath("$.unit").value("km"));
+	 */
 }
